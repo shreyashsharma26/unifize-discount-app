@@ -7,20 +7,26 @@ import com.unifize.discount.model.PaymentInfo;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class VoucherDiscountStrategy implements DiscountStrategy {
 
-    private static final Map<String, BigDecimal> voucherDiscounts = Map.of(
-            "SUPER69", BigDecimal.valueOf(0.69),
-            "WELCOME10", BigDecimal.valueOf(0.10)
+    private static final Map<String, VoucherData> voucherDataMap = Map.of(
+            "SUPER69", new VoucherData(
+                    BigDecimal.valueOf(0.69),
+                    LocalDate.of(2025, 12, 31)
+            ),
+            "WELCOME10", new VoucherData(
+                    BigDecimal.valueOf(0.10),
+                    LocalDate.of(2025, 7, 31)
+            )
     );
 
-    private String currentVoucherCode = null; // Will be set externally
+    private String currentVoucherCode = null;
 
-    // Allow setting voucherCode externally
     public void setVoucherCode(String voucherCode) {
         this.currentVoucherCode = voucherCode;
     }
@@ -36,15 +42,26 @@ public class VoucherDiscountStrategy implements DiscountStrategy {
             return BigDecimal.ZERO;
         }
 
-        BigDecimal discountPercentage = voucherDiscounts.getOrDefault(currentVoucherCode, BigDecimal.ZERO);
+        VoucherData voucherData = voucherDataMap.get(currentVoucherCode);
 
-        if (discountPercentage.compareTo(BigDecimal.ZERO) > 0) {
-            BigDecimal discountAmount = currentPrice.multiply(discountPercentage);
-            appliedDiscounts.put("Voucher " + currentVoucherCode, discountAmount);
-            return discountAmount;
+        if (voucherData == null) {
+            return BigDecimal.ZERO;
         }
 
-        return BigDecimal.ZERO;
+        // Check expiration date
+        if (voucherData.getExpirationDate().isBefore(LocalDate.now())) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal discountAmount = currentPrice.multiply(voucherData.getDiscountPercentage());
+        appliedDiscounts.put("Voucher " + currentVoucherCode, discountAmount);
+        return discountAmount;
+    }
+
+    // Optional: You can also expose a public validateVoucherCode(code) method here
+    public boolean isValidVoucher(String code) {
+        VoucherData voucherData = voucherDataMap.get(code);
+        return voucherData != null && !voucherData.getExpirationDate().isBefore(LocalDate.now());
     }
 
 }
