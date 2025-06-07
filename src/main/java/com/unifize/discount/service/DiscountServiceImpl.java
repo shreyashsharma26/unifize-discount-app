@@ -10,6 +10,7 @@ import com.unifize.discount.service.strategy.BankOfferDiscountStrategy;
 import com.unifize.discount.service.strategy.BrandDiscountStrategy;
 import com.unifize.discount.service.strategy.CategoryDiscountStrategy;
 import com.unifize.discount.service.strategy.VoucherDiscountStrategy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,24 +21,13 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DiscountServiceImpl implements DiscountService {
 
     private final BrandDiscountStrategy brandDiscountStrategy;
     private final CategoryDiscountStrategy categoryDiscountStrategy;
     private final VoucherDiscountStrategy voucherDiscountStrategy;
     private final BankOfferDiscountStrategy bankOfferDiscountStrategy;
-
-    public DiscountServiceImpl(
-            BrandDiscountStrategy brandDiscountStrategy,
-            CategoryDiscountStrategy categoryDiscountStrategy,
-            VoucherDiscountStrategy voucherDiscountStrategy,
-            BankOfferDiscountStrategy bankOfferDiscountStrategy
-    ) {
-        this.brandDiscountStrategy = brandDiscountStrategy;
-        this.categoryDiscountStrategy = categoryDiscountStrategy;
-        this.voucherDiscountStrategy = voucherDiscountStrategy;
-        this.bankOfferDiscountStrategy = bankOfferDiscountStrategy;
-    }
 
     @Override
     public DiscountedPrice calculateCartDiscounts(List<CartItem> cartItems, CustomerProfile customer, PaymentInfo paymentInfo,

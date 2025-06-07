@@ -21,7 +21,7 @@ public class VoucherDiscountStrategy implements DiscountStrategy {
             ),
             "WELCOME10", new VoucherData(
                     BigDecimal.valueOf(0.10),
-                    LocalDate.of(2025, 7, 31)
+                    LocalDate.of(2024, 7, 31)
             )
     );
 
