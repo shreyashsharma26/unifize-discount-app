@@ -10,6 +10,22 @@ import com.unifize.discount.model.PaymentInfo;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service interface for calculating discounts on cart items.
+ * <p>
+ * Discount calculation order:
+ * <ol>
+ *     <li>Brand discount</li>
+ *     <li>Category discount</li>
+ *     <li>Voucher discount</li>
+ *     <li>Bank offer</li>
+ * </ol>
+ *
+ * Provides also method to validate discount codes.
+ *
+ * Designed to follow Strategy Pattern for modular discount logic.
+ * </p>
+ */
 public interface DiscountService {
     /**
      * Calculate final price after applying discount logic:

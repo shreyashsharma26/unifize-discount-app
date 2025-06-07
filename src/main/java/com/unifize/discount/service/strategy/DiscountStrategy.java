@@ -8,6 +8,15 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Strategy interface for applying specific discount types.
+ *
+ * Implementations must provide logic for:
+ * - Calculating discount amount based on current cart state
+ * - Recording applied discounts into the provided map
+ *
+ * This interface supports extensible discount types using the Strategy Pattern.
+ */
 public interface DiscountStrategy {
 
     /**
