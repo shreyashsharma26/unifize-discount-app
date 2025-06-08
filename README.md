@@ -32,7 +32,7 @@
     - `PaymentInfo` is present
     - `bankName` matches an eligible bank in the map.
  
-### 1️⃣ General Assumptions
+### General Assumptions
 - The discount application **order is fixed**:
     1. Brand Discount
     2. Category Discount
