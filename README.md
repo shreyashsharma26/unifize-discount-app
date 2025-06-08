@@ -1,5 +1,14 @@
 # unifize-discount-app
 
+### Prerequisites
+- Java version used: 21
+- Maven version used: 3.9.10
+
+#### Build and run instructions on terminal
+- mvn clean install : to build the project.
+- mvn test : to run test cases
+- mvn javadoc:javadoc : to create javadocs
+
 ### Assumptions and Technical Decisions
 
 #### Architecture Pattern
